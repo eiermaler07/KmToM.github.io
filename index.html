@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Km Rechner</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        body h1 {
+            text-align: center;
+            margin-top: 25px;
+            margin-bottom: 100px;
+            font-size: 40px;
+            ;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .einstellungen {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        #input,
+        #btn,
+        #löschen,
+        #label-input {
+            width: 125px;
+            height: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+        
+        #output {
+            font-size: 30px;
+        }
+        
+        footer {
+            position: absolute;
+            bottom: 25px;
+        }
+        
+        #löschen,
+        #btn {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Kilometer - Meilen</h1>
+    </header>
+    <main class="container">
+        <div>
+            <input placeholder="Zahl" id="input" type="number" min="0">
+            <label id="label-input" for="input"></label>
+        </div>
+        <div class="einstellungen">
+            <p>Umrechnen in</p>
+            <span>
+                <input id="Kilometer" onclick="afterInput()" type="radio" name="einheit">
+                <label for="Kilometer">Kilometer</label>
+            </span>
+            <span>
+                <input id="Meilen" onclick="afterInput()" type="radio" name="einheit">
+                <label for="Meilen">Meilen</label>
+            </span>
+        </div>
+        <div>
+            <button id="btn">Umrechnen</button>
+            <button id="löschen">Löschen</button>
+        </div>
+        <span id="output"></span>
+    </main>
+    <footer>
+        (NaN = Not a Number)
+    </footer>
+    <script>
+        document.getElementById("label-input").innerHTML = "?";
+
+        function afterInput() {
+            if (document.getElementById("Kilometer").checked) {
+                document.getElementById("label-input").innerHTML = "Meilen";
+
+            } else if (document.getElementById("Meilen").checked) {
+                document.getElementById("label-input").innerHTML = "Kilometer";
+            }
+        }
+
+        document.getElementById("btn").onclick = function() {
+            const inputNumber = document.getElementById("input").value;
+            inputNumber.replace(".", ',');
+            const Zahl = Number(inputNumber);
+            const u = 1.609344;
+            const calcKm = Zahl * u;
+            const calcM = Zahl / u;
+
+            if (document.getElementById("Kilometer").checked) {
+                document.getElementById("output").innerHTML = calcKm.toFixed(5) + " Kilometer";
+
+            } else if (document.getElementById("Meilen").checked) {
+                document.getElementById("output").innerHTML = calcM.toFixed(5) + " Meilen";
+
+            } else {
+                document.getElementById("output").innerHTML = "Bitte Einheit Auswählen!";
+            }
+        }
+
+        document.getElementById("löschen").onclick = function löschen() {
+            document.getElementById("input").value = "";
+            document.getElementById("output").innerHTML = "";
+            document.getElementById("Kilometer").checked = false;
+            document.getElementById("Meilen").checked = false;
+            document.getElementById("label-input").innerHTML = "?";
+        }
+    </script>
+</body>
+
+</html>
